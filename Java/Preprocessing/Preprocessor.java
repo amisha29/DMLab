@@ -68,7 +68,7 @@ public class Preprocessor {
 
     void stratifiedSampling() {
         HashMap<String, ArrayList<String[]>> genderMap = new HashMap<>();
-        System.out.println("\n\nStratified sampling : \nEnetr sample size  :");
+        System.out.println("\n\nStratified sampling : \nEnter sample size  :");
         int samplesize = sc.nextInt();
 
         for(String[] row: data) {
