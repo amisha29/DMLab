@@ -33,7 +33,7 @@ class StrongRules {
 
             for(int i = 0; i < fk_1.length; i++) {
                 for(int j = i+1; j < fk_1.length; j++) {
-                    if(kitems.contains(fk_1[i]+fk_1[j]) && kitems.contains(fk_1[j]+fk_1[1]))
+                    if(kitems.contains(fk_1[i]+fk_1[j]) || kitems.contains(fk_1[j]+fk_1[1]))
                         continue;
                     else {
                         String elements = fk_1[i]+fk_1[j];
@@ -63,8 +63,29 @@ class StrongRules {
             String[] f_k = freqItemsets[i].split(",");
 
             for(String item : f_k) {
-                HashSet 
+                HashSet<Character> s = new HashSet<>();
+                for(Character c : String.join("",items).toCharArray())
+                    s.add(c);
+
+                for(Character c : item.toCharArray())
+                    s.remove(c);
+
+                String antecedent = Arrays.toString(item.toCharArray());
+                String consequent = s.toString();
+                String rule = antecedent + "->" + consequent;
+                // String opp_rule = consequent + "-> " + antecedent;
+                System.out.println(rule);
+                rules.add(rule);
+                // sup = in.nextDouble();
+                conf = in.nextDouble();
+                if (conf > confidenceThreshold){
+                    strongRules.add(rule);
+                }
             }
+        }
+        System.out.println("The strong rules are:");
+        for (String rule : strongRules){
+            System.out.println(rule);
         }
     }
 
@@ -79,8 +100,7 @@ class StrongRules {
         System.out.println("Enter the Support Threshold & Confidence Threshold");
         supportThreshold = in.nextDouble();
         confidenceThreshold = in.nextDouble();
-        StrongRules generator =
-                                new StrongRules(line, supportThreshold,confidenceThreshold);
+        StrongRules generator = new StrongRules(line, supportThreshold,confidenceThreshold);
         System.out.println("Frequent Subsets:");
         generator.generateFrequentSubsets();
         System.out.println("Candidate Rules:");
